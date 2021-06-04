@@ -1,0 +1,39 @@
+<mat-card>
+  <form
+    [formGroup]="currentForm"
+    (ngSubmit)="onSubmit()"
+    (submit)="$event.preventDefault()"
+    class="user-form"
+  >
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input
+        formControlName="email"
+        matInput
+        type="email"
+        placeholder="example@gmail.com"
+      />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Nickname</mat-label>
+      <input
+        formControlName="nickname"
+        matInput
+        type="text"
+        placeholder="Nickname"
+      />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input
+        matInput
+        formControlName="password"
+        placeholder="password"
+        type="password"
+      />
+    </mat-form-field>
+    <div>
+      <button mat-raised-button color="primary" type="submit">Sign Up</button>
+    </div>
+  </form>
+</mat-card>

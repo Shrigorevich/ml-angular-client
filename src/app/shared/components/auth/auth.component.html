@@ -1,0 +1,30 @@
+<mat-card>
+  <form
+    [formGroup]="currentForm"
+    (ngSubmit)="onSubmit()"
+    (submit)="$event.preventDefault()"
+    class="user-form"
+  >
+    <mat-form-field appearance="fill">
+      <mat-label>Input</mat-label>
+      <input
+        formControlName="nickname"
+        matInput
+        type="text"
+        placeholder="Nickname"
+      />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Input</mat-label>
+      <input
+        matInput
+        formControlName="password"
+        placeholder="password"
+        type="password"
+      />
+    </mat-form-field>
+    <div>
+      <button mat-raised-button color="primary" type="submit">Log In</button>
+    </div>
+  </form>
+</mat-card>
