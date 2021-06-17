@@ -1,8 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { BehaviorSubject, Observable, Subscriber } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { UserRegisterModel } from '../models';
 import { Token } from '../models/token.model';
 import { UserLoggedModel } from '../models/user-logged.model';
@@ -13,8 +14,6 @@ export const ACCESS_TOKEN_KEY = 'token';
 
 @Injectable()
 export class AuthService {
-  //private userDataSubject = new BehaviorSubject<UserLoggedModel | null>(null);
-  //public userData$ = this.userDataSubject.asObservable();
 
   private _userData: UserLoggedModel = { nickname: '', paid: false };
 
@@ -25,7 +24,8 @@ export class AuthService {
   constructor(
     private readonly _router: Router,
     private readonly _requestService: RequestService,
-    private readonly _jwtHelper: JwtHelperService
+    private readonly _jwtHelper: JwtHelperService,
+    private readonly _httpClient: HttpClient,
   ) {}
 
   public setUserData(): void {
@@ -53,5 +53,11 @@ export class AuthService {
   public logout() {
     localStorage.removeItem(ACCESS_TOKEN_KEY);
     this._router.navigate(['/']);
+  }
+  
+  public getIpAdress(): Observable<string> {
+    return this._httpClient.get<any>('http://api.ipify.org/?format=json').pipe(map((res: any) => {
+      return res.ip;
+    }));
   }
 }

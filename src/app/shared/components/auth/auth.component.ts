@@ -20,7 +20,7 @@ export class AuthComponent implements OnInit {
     this.currentForm = this._createForm();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   private _createForm(): FormGroup {
     const form = this._fb.group({
@@ -32,15 +32,18 @@ export class AuthComponent implements OnInit {
   }
 
   public login(user: UserLoginModel) {
-    this._authService.login(user).subscribe(
-      (response) => {
-        localStorage.setItem(ACCESS_TOKEN_KEY, response.access_token);
-        this._authService.setUserData();
-      },
-      (error) => {
-        alert(error.error.msg);
-      }
-    );
+    this._authService.getIpAdress().subscribe(ip => {
+      user.ip = ip;
+      this._authService.login(user).subscribe(
+        (response) => {
+          localStorage.setItem(ACCESS_TOKEN_KEY, response.access_token);
+          this._authService.setUserData();
+        },
+        (error) => {
+          alert(error.error.msg);
+        }
+      );
+    });
   }
 
   public onSubmit() {

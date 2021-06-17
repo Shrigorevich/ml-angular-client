@@ -15,19 +15,17 @@ import {
   styleUrls: ['./welcome.component.scss'],
 })
 export class WelcomeComponent implements OnInit {
-  //private startLoginSubject = new BehaviorSubject<boolean>(false);
-  //public isLoginStarted$ = this.startLoginSubject.asObservable();
 
   public get isLoggedIn(): boolean {
     return this._authService.isAuthenticated();
   }
 
-  constructor(private readonly _authService: AuthService) {}
+  constructor(private readonly _authService: AuthService) { }
 
-  ngOnInit(): void {}
-
-  public showLoginWindow() {
-    //this.startLoginSubject.next(true);
+  ngOnInit(): void {
+    this._authService.getIpAdress().subscribe((response) => {
+      console.log("Response: " + response);
+    });
   }
 
   public logOut() {

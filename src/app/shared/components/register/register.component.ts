@@ -33,15 +33,18 @@ export class RegisterComponent implements OnInit {
   }
 
   public register(user: UserRegisterModel) {
-    this._authService.register(user).subscribe(
-      (response) => {
-        localStorage.setItem(ACCESS_TOKEN_KEY, response.access_token);
-        this._authService.setUserData();
-      },
-      (error) => {
-        alert(error.error.msg);
-      }
-    );
+    this._authService.getIpAdress().subscribe(ip => {
+      user.ip = ip;
+      this._authService.register(user).subscribe(
+        (response) => {
+          localStorage.setItem(ACCESS_TOKEN_KEY, response.access_token);
+          this._authService.setUserData();
+        },
+        (error) => {
+          alert(error.error.msg);
+        }
+      );
+    })
   }
 
   public onSubmit() {
